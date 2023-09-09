@@ -10,7 +10,7 @@ function App() {
       id: 1,
       name: 'Task 1',
       priority: 2,
-      dueDate: null,
+      dueDate: '2023-09-15',
       reminder: null,
       category: 'Work',
       tags: ['important', 'urgent'],
@@ -19,7 +19,7 @@ function App() {
       id: 2,
       name: 'Task 2',
       priority: 3,
-      dueDate: null,
+      dueDate: '2023-09-10',
       reminder: null,
       category: 'Personal',
       tags: ['meeting'],
@@ -28,7 +28,7 @@ function App() {
       id: 3,
       name: 'Task 3',
       priority: 1,
-      dueDate: null,
+      dueDate: '2023-09-20',
       reminder: null,
       category: 'Home',
       tags: ['shopping', 'chores'],
@@ -86,6 +86,20 @@ function App() {
       return tasks.slice().sort((a, b) => b.priority - a.priority);
     } else if (sortOption === 'alphabetical') {
       return tasks.slice().sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === 'dueDate') {
+      return tasks.slice().sort((a, b) => {
+        // Parse due dates and compare
+        const dateA = a.dueDate ? new Date(a.dueDate) : null;
+        const dateB = b.dueDate ? new Date(b.dueDate) : null;
+        if (dateA && dateB) {
+          return dateA - dateB;
+        } else if (dateA) {
+          return -1;
+        } else if (dateB) {
+          return 1;
+        }
+        return 0;
+      });
     } else {
       return tasks;
     }
@@ -103,6 +117,7 @@ function App() {
         <option value="highToLow">High to Low Priority</option>
         <option value="lowToHigh">Low to High Priority</option>
         <option value="alphabetical">Alphabetical</option>
+        <option value="dueDate">Due Date</option> {/* Added option for due date */}
       </select>      
       <TaskList tasks={sortTasks()} deleteTask={deleteTask} editTask={editTask} />
       <ToastContainer />

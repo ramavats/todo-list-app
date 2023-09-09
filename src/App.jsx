@@ -103,11 +103,43 @@ function App() {
     } else {
       return tasks;
     }
+  }
+     // Export tasks as a JSON file
+  const exportTasks = () => {
+    const jsonTasks = JSON.stringify(tasks);
+    const blob = new Blob([jsonTasks], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tasks.json';
+    a.click();
+    toast.success('Tasks exported successfully');
   };
+
+  // Handle file import and update tasks
+  const importTasks = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const importedTasks = JSON.parse(e.target.result);
+        setTasks(importedTasks);
+        localStorage.setItem('tasks', JSON.stringify(importedTasks));
+        toast.success('Tasks imported successfully');
+      };
+      reader.readAsText(file);
+    }
+  };
+
+
 
   return (
     <div className="App">
       <h1 className='bg-black text-white p-2 flex justify-center font-bold text-2xl sticky top-0'>My To-Do List</h1>
+      <div>
+        <button onClick={exportTasks}>Export Tasks</button>
+        <input type="file" accept=".json" onChange={importTasks} />
+      </div>
       <AddTask addTask={addTask} />
       <select
         value={sortOption}

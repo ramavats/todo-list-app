@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddTask({ addTask }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -37,6 +39,7 @@ function AddTask({ addTask }) {
     e.preventDefault();
 
     if (taskName.trim() === '') {
+      toast.error('Task name cannot be empty');
       return;
     }
 
@@ -67,14 +70,14 @@ function AddTask({ addTask }) {
 
     addTask(newTask);
 
-    // Clear the input fields
     setTaskName('');
     setTaskPriority('medium');
     setDueDate('');
     setReminder('');
-    setCategory(''); // Reset category
-    setTags(''); // Reset tags
-    setIsVisible(false); // Hide the input fields after submitting
+    setCategory('');
+    setTags('');
+    setIsVisible(false);
+
   };
 
   return (

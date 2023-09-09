@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import TaskList from './components/TaskList';
 import AddTask from './components/AddTask';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const initialTasks = [
@@ -47,13 +49,14 @@ function App() {
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-    setIsAddingTask(false);
+    toast.success('Task added successfully');
   };
 
   const deleteTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    toast.error('Task deleted!'); // Display an error notification
   };
 
   const editTask = (taskId, newName, newPriority, newDueDate, newReminder, newCategory, newTags ) => {
@@ -72,6 +75,7 @@ function App() {
     );
     setTasks(updatedTasks);
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    toast.info('Task updated successfully!')
   };
   
 
@@ -99,9 +103,9 @@ function App() {
         <option value="highToLow">High to Low Priority</option>
         <option value="lowToHigh">Low to High Priority</option>
         <option value="alphabetical">Alphabetical</option>
-      </select>
-      {/* <AddTask addTask={addTask} /> */}
+      </select>      
       <TaskList tasks={sortTasks()} deleteTask={deleteTask} editTask={editTask} />
+      <ToastContainer />
     </div>
   );
 }

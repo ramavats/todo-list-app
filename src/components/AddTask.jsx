@@ -6,6 +6,8 @@ function AddTask({ addTask }) {
   const [taskPriority, setTaskPriority] = useState('medium'); // Default priority is 'medium'
   const [dueDate, setDueDate] = useState('');
   const [reminder, setReminder] = useState('');
+  const [category, setCategory] = useState(''); // New
+  const [tags, setTags] = useState(''); // New
 
   const handleTaskNameChange = (e) => {
     setTaskName(e.target.value);
@@ -23,12 +25,22 @@ function AddTask({ addTask }) {
     setReminder(e.target.value);
   };
 
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value); // New
+  };
+
+  const handleTagsChange = (e) => {
+    setTags(e.target.value); // New
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (taskName.trim() === '') {
       return;
     }
+
+    const tagsArray = tags.split(',').map((tag) => tag.trim()); // Split tags into an array
 
     // Convert the priority value to a numerical value
     let priorityValue;
@@ -49,6 +61,8 @@ function AddTask({ addTask }) {
       priority: priorityValue,
       dueDate: dueDate || null,
       reminder: reminder || null,
+      category: category || null, // Assign category
+      tags: tagsArray || null, // Assign tags
     };
 
     addTask(newTask);
@@ -58,6 +72,8 @@ function AddTask({ addTask }) {
     setTaskPriority('medium');
     setDueDate('');
     setReminder('');
+    setCategory(''); // Reset category
+    setTags(''); // Reset tags
     setIsVisible(false); // Hide the input fields after submitting
   };
 
@@ -90,6 +106,18 @@ function AddTask({ addTask }) {
             placeholder="Set Reminder"
             value={reminder}
             onChange={handleReminderChange}
+          />
+          <input
+            type="text"
+            placeholder="Category"
+            value={category} // New
+            onChange={handleCategoryChange} // New
+          />
+          <input
+            type="text"
+            placeholder="Tags (comma-separated)"
+            value={tags} // New
+            onChange={handleTagsChange} // New
           />
           <button className=' bg-green-700 text-white px-2 rounded-lg py-1' type="submit">Add Task</button>
         </form>

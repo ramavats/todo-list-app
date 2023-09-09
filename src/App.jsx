@@ -4,9 +4,33 @@ import AddTask from './components/AddTask';
 
 function App() {
   const initialTasks = [
-    { id: 1, name: 'Task 1', priority: 2, dueDate: null, reminder: null },
-    { id: 2, name: 'Task 2', priority: 3, dueDate: null, reminder: null },
-    { id: 3, name: 'Task 3', priority: 1, dueDate: null, reminder: null },
+    {
+      id: 1,
+      name: 'Task 1',
+      priority: 2,
+      dueDate: null,
+      reminder: null,
+      category: 'Work',
+      tags: ['important', 'urgent'],
+    },
+    {
+      id: 2,
+      name: 'Task 2',
+      priority: 3,
+      dueDate: null,
+      reminder: null,
+      category: 'Personal',
+      tags: ['meeting'],
+    },
+    {
+      id: 3,
+      name: 'Task 3',
+      priority: 1,
+      dueDate: null,
+      reminder: null,
+      category: 'Home',
+      tags: ['shopping', 'chores'],
+    },
   ];
 
   const [tasks, setTasks] = useState(initialTasks);
@@ -23,6 +47,7 @@ function App() {
     const updatedTasks = [...tasks, newTask];
     setTasks(updatedTasks);
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    setIsAddingTask(false);
   };
 
   const deleteTask = (taskId) => {
@@ -31,7 +56,7 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
 
-  const editTask = (taskId, newName, newPriority, newDueDate, newReminder) => {
+  const editTask = (taskId, newName, newPriority, newDueDate, newReminder, newCategory, newTags ) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskId
         ? {
@@ -40,6 +65,8 @@ function App() {
             priority: newPriority,
             dueDate: newDueDate,      // Update due date
             reminder: newReminder,    // Update reminder title
+            category: newCategory,
+            tags: newTags,
           }
         : task
     );
@@ -63,6 +90,7 @@ function App() {
   return (
     <div className="App">
       <h1 className='bg-black text-white p-2 flex justify-center font-bold text-2xl sticky top-0'>My To-Do List</h1>
+      <AddTask addTask={addTask} />
       <select
         value={sortOption}
         onChange={(e) => setSortOption(e.target.value)}
@@ -72,7 +100,7 @@ function App() {
         <option value="lowToHigh">Low to High Priority</option>
         <option value="alphabetical">Alphabetical</option>
       </select>
-      <AddTask addTask={addTask} />
+      {/* <AddTask addTask={addTask} /> */}
       <TaskList tasks={sortTasks()} deleteTask={deleteTask} editTask={editTask} />
     </div>
   );

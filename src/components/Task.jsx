@@ -76,7 +76,7 @@ function Task({ task, deleteTask, editTask }) {
             onChange={handleReminderChange}
           />
           <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
+          <button className='bg-red-600 text-white font-bold px-2 rounded-lg py-1' onClick={handleCancel}>Cancel</button>
         </div>
       ) : (
         <div>
@@ -84,8 +84,8 @@ function Task({ task, deleteTask, editTask }) {
           <span>{task.priority === 1 ? 'High' : task.priority === 2 ? 'Medium' : 'Low'}</span>
           {task.dueDate && <span>Due: {task.dueDate}</span>}
           {task.reminder && <span>Reminder: {task.reminder}</span>}
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={() => deleteTask(task.id)}>Delete</button>
+          <button className='btn bg-blue-800 text-white px-4 rounded-lg py-1 mx-2' onClick={handleEdit}>Edit</button>
+          <button className='btn bg-red-600 text-white px-4 rounded-lg py-1 mx-2' onClick={() => deleteTask(task.id)}>Delete</button>
         </div>
       )}
     </li>

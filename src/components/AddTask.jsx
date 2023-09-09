@@ -91,7 +91,7 @@ function AddTask({ addTask }) {
             value={reminder}
             onChange={handleReminderChange}
           />
-          <button type="submit">Add Task</button>
+          <button className=' bg-green-700 text-white px-2 rounded-lg py-1' type="submit">Add Task</button>
         </form>
       )}
     </div>

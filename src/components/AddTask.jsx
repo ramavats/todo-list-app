@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 function AddTask({ addTask }) {
+  const [isVisible, setIsVisible] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [taskPriority, setTaskPriority] = useState('medium'); // Default priority is 'medium'
   const [dueDate, setDueDate] = useState('');
@@ -57,35 +58,43 @@ function AddTask({ addTask }) {
     setTaskPriority('medium');
     setDueDate('');
     setReminder('');
+    setIsVisible(false); // Hide the input fields after submitting
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Enter task name"
-        value={taskName}
-        onChange={handleTaskNameChange}
-      />
-      <select value={taskPriority} onChange={handleTaskPriorityChange}>
-        <option value="high">High Priority</option>
-        <option value="medium">Medium Priority</option>
-        <option value="low">Low Priority</option>
-      </select>
-      <input
-        type="date"
-        placeholder="Due Date"
-        value={dueDate}
-        onChange={handleDueDateChange}
-      />
-      <input
-        type="text"
-        placeholder="Set Reminder"
-        value={reminder}
-        onChange={handleReminderChange}
-      />
-      <button type="submit">Add Task</button>
-    </form>
+<div>
+      <button onClick={() => setIsVisible(!isVisible)}>
+        {isVisible ? 'Cancel' : 'Add a new task'}
+      </button>
+      {isVisible && (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter task name"
+            value={taskName}
+            onChange={handleTaskNameChange}
+          />
+          <select value={taskPriority} onChange={handleTaskPriorityChange}>
+            <option value="high">High Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="low">Low Priority</option>
+          </select>
+          <input
+            type="date"
+            placeholder="Due Date"
+            value={dueDate}
+            onChange={handleDueDateChange}
+          />
+          <input
+            type="text"
+            placeholder="Set Reminder"
+            value={reminder}
+            onChange={handleReminderChange}
+          />
+          <button type="submit">Add Task</button>
+        </form>
+      )}
+    </div>
   );
 }
 

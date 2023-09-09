@@ -78,9 +78,9 @@ function AddTask({ addTask }) {
   };
 
   return (
-<div>
-      <button onClick={() => setIsVisible(!isVisible)}>
-        {isVisible ? 'Cancel' : 'Add a new task'}
+<div className='mt-2 mx-5 transition-all duration-200 ease-in'>
+      <button onClick={() => setIsVisible(!isVisible)} className={`bg-blue-500 text-white px-2 rounded-md py-1 ${ isVisible ? 'bg-red-500' : '' }`}>
+        {isVisible ? 'Cancel' : 'New Task'}
       </button>
       {isVisible && (
         <form onSubmit={handleSubmit}>

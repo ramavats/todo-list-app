@@ -72,7 +72,7 @@ function Task({ task, deleteTask, editTask }) {
   return (
     <li>
       {isEditing ? (
-        <div>
+        <div className='flex flex-col'>
           <input
             type="text"
             value={editedTaskName}
@@ -113,15 +113,18 @@ function Task({ task, deleteTask, editTask }) {
           <button className='bg-red-600 text-white font-bold px-2 rounded-lg py-1' onClick={handleCancel}>Cancel</button>
         </div>
       ) : (
-        <div>
+        <div className='flex flex-col'>
           <span>{task.name}</span>
           <span>{task.priority === 1 ? 'High' : task.priority === 2 ? 'Medium' : 'Low'}</span>
           {task.dueDate && <span>Due: {task.dueDate}</span>}
           {task.reminder && <span>Reminder: {task.reminder}</span>}
           {task.category && <span>Category: {task.category}</span>} {/* Display category */}
           {task.tags && <span>Tags: {task.tags.join(', ')}</span>} {/* Display tags */}
-          <button className='btn bg-blue-800 text-white px-4 rounded-lg py-1 mx-2' onClick={handleEdit}>Edit</button>
-          <button className='btn bg-red-600 text-white px-4 rounded-lg py-1 mx-2' onClick={() => deleteTask(task.id)}>Delete</button>
+          <div className='flex justify-even'>
+            <button className='btn bg-blue-800 text-white px-4 rounded-lg py-1 mx-2' onClick={handleEdit}>Edit</button>
+            <button className='btn bg-red-600 text-white px-4 rounded-lg py-1 mx-2' onClick={() => deleteTask(task.id)}>Delete</button>
+          </div>
+          <hr className='mt-2 justify-center items-center max-w-lg' />
         </div>
       )}
     </li>

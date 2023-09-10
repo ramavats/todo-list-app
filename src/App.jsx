@@ -141,6 +141,7 @@ function App() {
 
   return (
     <div className="App">
+
       <h1 className='bg-black text-white p-2 flex justify-center font-bold text-2xl sticky top-0'>My To-Do List</h1>
       <div>
         <button onClick={exportTasks}>Export Tasks</button>
@@ -150,7 +151,8 @@ function App() {
         )}
       </div>
       <AddTask addTask={addTask} />
-      <select
+      <div className='flex justify-end my-2 mx-2'>
+      <select 
         value={sortOption}
         onChange={(e) => setSortOption(e.target.value)}
       >
@@ -159,7 +161,8 @@ function App() {
         <option value="lowToHigh">Low to High Priority</option>
         <option value="alphabetical">Alphabetical</option>
         <option value="dueDate">Due Date</option> {/* Added option for due date */}
-      </select>      
+      </select>
+      </div>      
       <TaskList tasks={sortTasks()} deleteTask={deleteTask} editTask={editTask} />
       <ToastContainer />
     </div>

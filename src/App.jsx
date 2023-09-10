@@ -37,6 +37,7 @@ function App() {
 
   const [tasks, setTasks] = useState(initialTasks);
   const [sortOption, setSortOption] = useState('none');
+  const [isImportVisible, setIsImportVisible] = useState(false); // State for import file input visibility
 
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');
@@ -116,6 +117,11 @@ function App() {
     toast.success('Tasks exported successfully');
   };
 
+  // Handle import button click to toggle the visibility of the file input
+  const handleImportClick = () => {
+    setIsImportVisible(!isImportVisible);
+  };
+
   // Handle file import and update tasks
   const importTasks = (event) => {
     const file = event.target.files[0];
@@ -138,7 +144,10 @@ function App() {
       <h1 className='bg-black text-white p-2 flex justify-center font-bold text-2xl sticky top-0'>My To-Do List</h1>
       <div>
         <button onClick={exportTasks}>Export Tasks</button>
-        <input type="file" accept=".json" onChange={importTasks} />
+        <button onClick={handleImportClick}>Import Tasks</button>
+        {isImportVisible && (
+          <input type="file" accept=".json" onChange={importTasks} />
+        )}
       </div>
       <AddTask addTask={addTask} />
       <select
